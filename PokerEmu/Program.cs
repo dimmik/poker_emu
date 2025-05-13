@@ -17,7 +17,7 @@ namespace PokerEmu {
         {
 
             int max = 100000;
-            print("hane\twin rate");
+            print("hand\twin rate");
             var vals = Enum.GetValues<Value>().ToArray();
             for (int i1 = 0; i1 < vals.Length; i1++)
             {
@@ -71,7 +71,7 @@ namespace PokerEmu {
                     winningCombos[c] = winningCombos.GetValueOrDefault(c, 0) + 1;
                 }
             }
-            var combos = string.Join("\t", winningCombos.OrderByDescending(x => x.Value).Select(x => x.Key));
+            var combos = string.Join("\t", winningCombos.OrderByDescending(x => x.Value).Select(x => $"{x.Key}\t{x.Value * 100.0 / results[1]:0.00}%"));
             print($"{c1.Value.ToS()}{c2.Value.ToS()}{(c1.Suite == c2.Suite ? "s" : "o")}\t{(results[1] * 100.0 / max):0.00}%\t{combos}");
         }
 
