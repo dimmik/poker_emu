@@ -24,7 +24,14 @@ namespace PokerEmu
         Jack = 11,
         Queen = 12,
         King = 13,
-        Ace = 14,
+        Ace = 14
+
+    }
+    public static class ValueHelper 
+    { 
+        public static string ToS(this Value value) {    
+            return ((int)value) > 9 ? value.ToString().Substring(0,1) : $"{(int)value}";
+        }
     }
     public record Card(Suite Suite, Value Value);
     public class Combination
