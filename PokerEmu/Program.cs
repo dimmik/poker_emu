@@ -7,7 +7,7 @@ namespace PokerEmu {
 
     public class Program
     {
-        static string fn = @"c:\tmp\poker_values_100000.tsv";
+        static string fn = @"c:\tmp\poker_values_1000_1.tsv";
         static void print(string s)
         {
             Console.WriteLine(s);
@@ -16,7 +16,7 @@ namespace PokerEmu {
         static void Main()
         {
 
-            int max = 100000;
+            int max = 1000;
             print("hand\twin rate");
             var vals = Enum.GetValues<Value>().ToArray();
             for (int i1 = 0; i1 < vals.Length; i1++)

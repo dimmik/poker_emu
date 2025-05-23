@@ -15,10 +15,10 @@ namespace PokerEmu
                 return null;
 
             // Make a copy of the cards array to avoid modifying the original
-            Card[] sortedCards = cards.OrderByDescending(c => (int)c.Value).ToArray();
+            Card[] sortedCards = [.. cards.OrderByDescending(c => (int)c.Value)];
 
             // Check for each combination in descending order of value
-            Combination combination;
+            Combination? combination;
 
             // Royal Flush (weight: 9000000000)
             if ((combination = CheckRoyalFlush(sortedCards)) != null)
@@ -60,7 +60,7 @@ namespace PokerEmu
             return CheckHighCard(sortedCards);
         }
 
-        private Combination CheckRoyalFlush(Card[] cards)
+        private Combination? CheckRoyalFlush(Card[] cards)
         {
             // A royal flush is a straight flush with Ace high
             var straightFlush = CheckStraightFlush(cards);
@@ -77,7 +77,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckStraightFlush(Card[] cards)
+        private Combination? CheckStraightFlush(Card[] cards)
         {
             // Group cards by suite
             var suitedCards = cards.GroupBy(c => c.Suite)
@@ -101,7 +101,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckFourOfAKind(Card[] cards)
+        private Combination? CheckFourOfAKind(Card[] cards)
         {
             var groups = cards.GroupBy(c => c.Value)
                              .Where(g => g.Count() == 4)
@@ -130,7 +130,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckFullHouse(Card[] cards)
+        private Combination? CheckFullHouse(Card[] cards)
         {
             var valueGroups = cards.GroupBy(c => c.Value)
                                   .Select(g => new { Value = g.Key, Cards = g.ToArray() })
@@ -158,7 +158,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckFlush(Card[] cards)
+        private Combination? CheckFlush(Card[] cards)
         {
             var suitGroups = cards.GroupBy(c => c.Suite)
                                  .Where(g => g.Count() >= 5)
@@ -185,7 +185,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckStraight(Card[] cards)
+        private Combination? CheckStraight(Card[] cards)
         {
             // Remove duplicate values
             var distinctCards = cards.GroupBy(c => c.Value)
@@ -251,7 +251,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckThreeOfAKind(Card[] cards)
+        private Combination? CheckThreeOfAKind(Card[] cards)
         {
             var valueGroups = cards.GroupBy(c => c.Value)
                                   .Where(g => g.Count() == 3)
@@ -281,7 +281,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckTwoPair(Card[] cards)
+        private Combination? CheckTwoPair(Card[] cards)
         {
             var pairs = cards.GroupBy(c => c.Value)
                             .Where(g => g.Count() >= 2)
@@ -314,7 +314,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckOnePair(Card[] cards)
+        private Combination? CheckOnePair(Card[] cards)
         {
             var pair = cards.GroupBy(c => c.Value)
                            .Where(g => g.Count() >= 2)
@@ -347,7 +347,7 @@ namespace PokerEmu
             return null;
         }
 
-        private Combination CheckHighCard(Card[] cards)
+        private Combination? CheckHighCard(Card[] cards)
         {
             var topFive = cards.OrderByDescending(c => (int)c.Value).Take(5).ToArray();
 
