@@ -16,9 +16,19 @@ namespace PokerEmu {
         static void Main()
         {
 
-            int max = 1000;
+            int max = 1000000;
             print("hand\twin rate");
-            var vals = Enum.GetValues<Value>().ToArray();
+            var (c1, c2) = (new Card(Suite.Clubs, Value.Seven), new Card(Suite.Clubs, Value.Two));
+            int flush = 0;
+            for (int i = 0; i < max; i++)
+            {
+                var (myW, oppoW) = RunGame(c1, c2, randomMyCards: false);
+                if (myW.Name.Contains("Flush") && myW.Weight != oppoW.Weight){
+                    flush++;
+                }
+            }
+            Console.WriteLine($"flush: {flush} p: {flush * 100.0 / max:0.00}%");
+            /*var vals = Enum.GetValues<Value>().ToArray();
             for (int i1 = 0; i1 < vals.Length; i1++)
             {
                 for (int i2 = i1; i2 < vals.Length; i2++)
@@ -45,7 +55,7 @@ namespace PokerEmu {
                         SpecificGame(c1, c2, max);
                     }
                 }
-            }
+            }*/
 
 
 
